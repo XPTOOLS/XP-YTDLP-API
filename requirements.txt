@@ -3,3 +3,4 @@ ffmpeg
 fastapi
 loguru
 uvicorn
+requests
