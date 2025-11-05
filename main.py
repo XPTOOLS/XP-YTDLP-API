@@ -2,6 +2,7 @@ from fastapi import FastAPI, Query, Header, HTTPException, Depends, Security
 from fastapi.security.api_key import APIKeyHeader
 import yt_dlp
 import os
+import uvicorn
 from loguru import logger
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -156,3 +157,15 @@ def get_video_info(url: str = Query(..., description="YouTube video URL")):
     except Exception as e:
         logger.exception("Error fetching video info")
         return {"status": "error", "message": str(e)}
+
+if __name__ == "__main__":
+    # Get the port from environment (Render sets this)
+    port = int(os.environ.get("PORT", 8000))
+
+    # Run FastAPI app with uvicorn
+    uvicorn.run(
+        "main:app",        # assuming your file is main.py
+        host="0.0.0.0",    # listen on all network interfaces
+        port=port,
+        reload=True        # remove reload=True in production
+    )
