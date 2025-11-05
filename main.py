@@ -159,13 +159,11 @@ def get_video_info(url: str = Query(..., description="YouTube video URL")):
         return {"status": "error", "message": str(e)}
 
 if __name__ == "__main__":
-    # Get the port from environment (Render sets this)
-    port = int(os.environ.get("PORT", 8000))
-
-    # Run FastAPI app with uvicorn
+    port = int(os.environ.get("PORT", 8000))  # Render sets PORT
     uvicorn.run(
-        "main:app",        # assuming your file is main.py
-        host="0.0.0.0",    # listen on all network interfaces
+        "main:app",  # <filename>:<app instance>
+        host="0.0.0.0",  # bind to all interfaces
         port=port,
-        reload=True        # remove reload=True in production
+        reload=False  # must be False in production
     )
+
